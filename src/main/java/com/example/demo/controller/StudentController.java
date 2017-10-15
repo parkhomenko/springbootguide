@@ -4,6 +4,7 @@ import com.example.demo.model.Student;
 import com.example.demo.repository.StudentRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +20,9 @@ public class StudentController {
   StudentRepository studentRepository;
 
   @RequestMapping(value = "students", method = RequestMethod.GET)
-  public List<Student> getAll() {
-    return studentRepository.findAll();
+  public List<Student> getAll() throws Exception {
+    throw new RuntimeException("Just an exception");
+    //return studentRepository.findAll();
   }
 
   @RequestMapping(value = "student/{id}", method = RequestMethod.GET)
@@ -54,4 +56,11 @@ public class StudentController {
   public List<Student> getAllCustom2() {
     return studentRepository.findByLastnameCustom("Wayne");
   }
+
+  /*
+  @ExceptionHandler
+  public void exceptionHandlerMethod(RuntimeException ex) {
+    System.out.println("hello");
+  }
+  */
 }
